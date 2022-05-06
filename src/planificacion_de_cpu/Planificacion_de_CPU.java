@@ -6,6 +6,7 @@ package planificacion_de_cpu;
 
 import Algoritmos.Algoritmo;
 import Algoritmos.AlgoritmoFCFS;
+import Algoritmos.AlgoritmoSJF_No_Exclusivo;
 import Algoritmos.Proceso;
 import Lector.Lector;
 import java.util.ArrayList;
@@ -42,9 +43,11 @@ public class Planificacion_de_CPU {
         System.out.println("---------------");
         System.out.println("---------------");
         System.out.println("---------------");
-        AlgoritmoFCFS f = new AlgoritmoFCFS(q);
-        f.Resolver();
+        //AlgoritmoFCFS f = new AlgoritmoFCFS(q);
+        //f.Resolver();
 
+        AlgoritmoSJF_No_Exclusivo f = new AlgoritmoSJF_No_Exclusivo(q);
+        f.Resolver();
     }
 
 }

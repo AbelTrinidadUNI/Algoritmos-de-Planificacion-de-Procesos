@@ -97,8 +97,7 @@ public class AlgoritmoFCFS extends Algoritmo {
     }
 
     @Override
-    public List<Proceso> OrdenarListaProcesos(List<Proceso> p
-    ) {
+    public List<Proceso> OrdenarListaProcesos(List<Proceso> p) {
         Collections.sort(p, (Proceso p1, Proceso p2) -> new Integer(p1.getTiempo_llegada()).compareTo(new Integer(p2.getTiempo_llegada())));
         return p;
     }

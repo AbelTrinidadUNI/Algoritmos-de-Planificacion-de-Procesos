@@ -61,4 +61,24 @@ public abstract class Algoritmo {
         return "\n;" + promedios.toString().replaceAll(", ", ";").replace("[", "").replace("]", "");
 
     }
+
+    public String getTabla(List<Proceso> procesos, int totalRafagas) {
+
+        StringBuilder resultado = new StringBuilder();
+        resultado.append("Procesos");
+        resultado.append(";");
+        for (int i = 0; i < totalRafagas; i++) {
+            resultado.append(i);
+            resultado.append(";");
+        }
+        resultado.append("\n");
+
+        for (Proceso p : procesos) {
+            resultado.append(p.getNombre());
+            resultado.append(";");
+            resultado.append(p.toStringPuntosAPintar());
+            resultado.append("\n");
+        }
+        return resultado.toString();
+    }
 }
