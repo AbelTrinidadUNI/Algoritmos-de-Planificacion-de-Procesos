@@ -62,8 +62,9 @@ public class AlgoritmoFCFS extends Algoritmo {
                     //se marca como completado y se quita de la primera posicion y se lo manda al final de la lista
                     this.procesos.get(0).setCompletado(true);
                     Proceso p = this.procesos.get(0);
+                   
                     this.procesos.remove(0);
-                    this.procesos.add(p);
+                    this.procesos.add(CompletarColumnas(p, this.totalRafagas));
                 }
             } else {
 
@@ -73,6 +74,14 @@ public class AlgoritmoFCFS extends Algoritmo {
 
         Escritor e = new Escritor("src/Archivos/Resultados.csv");
         e.escibir(this.Resultado() + this.promediar(this.procesos));
+    }
+    
+    private Proceso CompletarColumnas(Proceso p, int rafagas){
+        while(p.getCantidadColumnas() < rafagas){
+            p.agregarPunto("");
+        }
+        
+        return p;
     }
 
     public String Resultado() {

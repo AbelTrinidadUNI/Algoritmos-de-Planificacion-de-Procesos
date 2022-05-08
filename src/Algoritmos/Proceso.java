@@ -113,9 +113,13 @@ public class Proceso {
     public void agregarPunto(int posicion, String valor){
         this.puntosAPintar.add(posicion, valor);
     }
-    
+    public void agregarPunto(String valor){
+        this.puntosAPintar.add(valor);
+    }    
     public String toStringPuntosAPintar(){
         return this.puntosAPintar.toString().replaceAll(", ", ";").replace("[", "").replace("]", "");
     }
-    
+    public int getCantidadColumnas(){
+        return this.puntosAPintar.size();
+    }
 }
