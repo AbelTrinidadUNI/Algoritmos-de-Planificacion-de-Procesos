@@ -6,6 +6,7 @@ package planificacion_de_cpu;
 
 import Algoritmos.Algoritmo;
 import Algoritmos.AlgoritmoFCFS;
+import Algoritmos.AlgoritmoSJF_Exclusivo;
 import Algoritmos.AlgoritmoSJF_No_Exclusivo;
 import Algoritmos.Proceso;
 import Lector.Lector;
@@ -46,7 +47,7 @@ public class Planificacion_de_CPU {
         //AlgoritmoFCFS f = new AlgoritmoFCFS(q);
         //f.Resolver();
 
-        AlgoritmoSJF_No_Exclusivo f = new AlgoritmoSJF_No_Exclusivo(q);
+        AlgoritmoFCFS f = new AlgoritmoFCFS(q);
         f.Resolver();
     }
 
