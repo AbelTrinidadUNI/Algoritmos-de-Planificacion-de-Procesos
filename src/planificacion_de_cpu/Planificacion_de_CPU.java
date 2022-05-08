@@ -6,6 +6,7 @@ package planificacion_de_cpu;
 
 import Algoritmos.Algoritmo;
 import Algoritmos.AlgoritmoFCFS;
+import Algoritmos.AlgoritmoRoundRobin;
 import Algoritmos.AlgoritmoSJF_No_Exclusivo;
 import Algoritmos.Proceso;
 import Lector.Lector;
@@ -27,7 +28,7 @@ public class Planificacion_de_CPU {
         // TODO code application logic here
         //System.out.println("hola mundo");
         Lector.leer();
-        
+
         List<Proceso> q = new ArrayList();
         q.add(new Proceso("A", 0, 6, 3));
         q.add(new Proceso("B", 1, 2, 8));
@@ -36,7 +37,6 @@ public class Planificacion_de_CPU {
         q.add(new Proceso("E", 4, 5, 5));
         q.add(new Proceso("F", 4, 3, 5));
         q.add(new Proceso("G", 4, 2, 5));
-        
 
         System.out.println("---------------");
         System.out.println("---------------");
@@ -46,8 +46,10 @@ public class Planificacion_de_CPU {
         //AlgoritmoFCFS f = new AlgoritmoFCFS(q);
         //f.Resolver();
 
-        AlgoritmoSJF_No_Exclusivo f = new AlgoritmoSJF_No_Exclusivo(q);
+       //AlgoritmoSJF_No_Exclusivo f = new AlgoritmoSJF_No_Exclusivo(q);
+        AlgoritmoRoundRobin f = new AlgoritmoRoundRobin(q, 4);
         f.Resolver();
+
     }
 
 }
