@@ -6,6 +6,7 @@ package planificacion_de_cpu;
 
 import Algoritmos.Algoritmo;
 import Algoritmos.AlgoritmoFCFS;
+import Algoritmos.AlgoritmoHRRB;
 import Algoritmos.AlgoritmoSJF_Exclusivo;
 import Algoritmos.AlgoritmoSJF_No_Exclusivo;
 import Algoritmos.Proceso;
@@ -46,9 +47,14 @@ public class Planificacion_de_CPU {
         System.out.println("---------------");
         //AlgoritmoFCFS f = new AlgoritmoFCFS(q);
         //f.Resolver();
-
+        /*
+        List<Proceso> qq = q;
         AlgoritmoFCFS f = new AlgoritmoFCFS(q);
         f.Resolver();
+        */
+        
+        AlgoritmoHRRB h = new AlgoritmoHRRB(q);
+        h.Resolver();
     }
 
 }

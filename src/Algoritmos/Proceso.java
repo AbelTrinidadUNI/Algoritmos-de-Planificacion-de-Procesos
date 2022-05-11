@@ -19,6 +19,7 @@ public class Proceso {
     private int rafagasCompletadas;
     private boolean completado;
     private List<String> puntosAPintar;
+    private double prioridadHRRB;
     
     private int tiempo_espera;
     private int tiempo_ejecucion;
@@ -35,11 +36,19 @@ public class Proceso {
         this.tiempo_espera = 0;
         this.tiempo_ejecucion = 0;
         this.tiempo_respuesta = 0;
-        
+        this.prioridadHRRB = 0.0;
     }
 
     public int getTiempo_espera() {
         return tiempo_espera;
+    }
+
+    public double getPrioridadHRRB() {
+        return prioridadHRRB;
+    }
+
+    public void setPrioridadHRRB(double prioridadHRRB) {
+        this.prioridadHRRB = prioridadHRRB;
     }
 
     public void setTiempo_espera(int tiempo_espera) {
