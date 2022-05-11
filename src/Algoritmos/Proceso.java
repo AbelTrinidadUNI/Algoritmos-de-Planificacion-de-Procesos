@@ -32,6 +32,7 @@ public class Proceso {
         this.prioridad = prioridad;
         this.puntosAPintar = new ArrayList<String>();
         this.completado = false;
+        
         this.rafagasCompletadas = 0;
         this.tiempo_espera = 0;
         this.tiempo_ejecucion = 0;
