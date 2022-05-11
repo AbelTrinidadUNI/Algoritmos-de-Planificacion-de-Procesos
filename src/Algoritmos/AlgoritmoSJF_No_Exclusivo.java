@@ -33,16 +33,16 @@ public class AlgoritmoSJF_No_Exclusivo extends Algoritmo {
         for (int i = 0; i < this.totalRafagas; i++) {
             if (!this.procesos.get(0).getCompletado() && this.procesos.get(0).getTiempo_llegada() <= i) {
                 try {
-                    this.procesos.get(0).agregarPunto(i, "x");
+                    this.procesos.get(0).agregarPunto(i, Algoritmo.EJECUCION);
                 } catch (IndexOutOfBoundsException e) {
                     for (int j = 0; j < i; j++) {
                         if (j < this.procesos.get(0).getTiempo_llegada()) {
-                            this.procesos.get(0).agregarPunto(j, " ");
+                            this.procesos.get(0).agregarPunto(j, Algoritmo.INACTIVO);
                         } else {
-                            this.procesos.get(0).agregarPunto(j, "_");
+                            this.procesos.get(0).agregarPunto(j, Algoritmo.ESPERA);
                         }
                     }
-                    this.procesos.get(0).agregarPunto(i, "x");
+                    this.procesos.get(0).agregarPunto(i, Algoritmo.EJECUCION);
 
                 }
                 this.procesos.get(0).setRafagasCompletadas(this.procesos.get(0).getRafagasCompletadas() + 1);
@@ -67,12 +67,9 @@ public class AlgoritmoSJF_No_Exclusivo extends Algoritmo {
         this.procesosCompletados = this.OrdenarListaProcesosNombre(this.procesosCompletados);
         String resultado = this.getTabla(this.procesosCompletados, this.totalRafagas) + this.promediar(this.procesosCompletados);
         
-        Escritor e = new Escritor("src/Archivos/Resultados.csv");
+        Escritor e = new Escritor("src/Archivos/Resultados-Algoritmo-SJF_No_Exclusivo.csv");
         e.escibir(resultado);
         
-        /*for(int i = 0; i < this.procesosCompletados.size(); i++){
-            System.out.println(this.procesosCompletados.get(i).getNombre() + "  =   " + this.procesosCompletados.get(i).toStringPuntosAPintar());
-        }*/
     }
     
     public List<Proceso> OrdenarListaProcesosNombre(List<Proceso> p) {

@@ -33,7 +33,7 @@ public class Inicio extends javax.swing.JFrame {
         List contenido = Lector.leer();
         DefaultTableModel m = new DefaultTableModel(((String[][]) contenido.get(1)), ((String[]) contenido.get(0)));
         this.jTable.setModel(m);
-        procesos = new ArrayList();
+        this.procesos = new ArrayList();
 
         for (String[] item : ((String[][]) contenido.get(1))) {
             String nombre = item[0];
@@ -403,6 +403,7 @@ public class Inicio extends javax.swing.JFrame {
             boolean error = false;
             if (rr) {
                 quantum = Integer.parseInt(this.jTFQuantum.getText().trim());
+                System.out.println("El quantum es: " + quantum);
                 if (quantum <= 0) {
                     error = true;
                 }
@@ -421,20 +422,27 @@ public class Inicio extends javax.swing.JFrame {
                     algoritmo.Resolver();
                 }
                 if (prioridad) {
-                    //AlgoritmoPrioridad algoritmo = new AlgoritmoPrioridad(procesos);
-                    //algoritmo.Resolver();
+                    AlgoritmoPrioridad algoritmo = new AlgoritmoPrioridad(this.procesos);
+                    algoritmo.Resolver();
                 }
                 if (rr) {
-                    //AlgoritmoRoundRobin algoritmo = new AlgoritmoRoundRobin(procesos);
-                    //algoritmo.Resolver();
+                    AlgoritmoRoundRobin algoritmo = new AlgoritmoRoundRobin(this.procesos, quantum);
+                    if(algoritmo.valido()){
+                    algoritmo.Resolver();
+                    }else{
+                        System.out.println("Quantum invalido");
+                        JOptionPane.showMessageDialog(null, "Quantum invalido");
+                    }
                 }
                 if (hrrb) {
-                    //AlgoritmoHRRB algoritmo = new AlgoritmoHRRB(procesos);
-                    //algoritmo.Resolver();
+                    AlgoritmoHRRB algoritmo = new AlgoritmoHRRB(procesos);
+                    algoritmo.Resolver();
                 }
             } else {
-                JOptionPane.showMessageDialog(rootPane, "Debe indicar el valor del Quantum, este debe ser mayor a 0!!!");
+                JOptionPane.showMessageDialog(null, "Debe indicar el valor del Quantum, este debe ser mayor a 0!!!");
             }
+            
+            JOptionPane.showMessageDialog(null, "Se calculo exitoso, puede ver los resultados en la carpeta Archivo del proyecto.");
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Debe indicar el Quantum para el algoritmo de RR!!!");

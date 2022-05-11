@@ -1,1 +1,7 @@
 /src/Archivos/Resultados.csv
+/src/Archivos/Resultados-Algoritmo-RR.csv
+/src/Archivos/Resultados-Algoritmo-HRRN.csv
+/src/Archivos/Resultados-Algortmo-Prioridad.csv
+/src/Archivos/Resultados-Algoritmo-SJF_No_Exclusivo.csv
+/src/Archivos/Resultados-Algoritmo-SJF_Exclusivo.csv
+/src/Archivos/Resultados-Algoritmo-FCFS.csv

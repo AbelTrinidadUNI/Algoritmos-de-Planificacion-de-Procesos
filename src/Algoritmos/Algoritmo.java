@@ -12,7 +12,10 @@ import java.util.List;
  * @author abelt
  */
 public abstract class Algoritmo {
-
+    public static String EJECUCION = "X";  
+    public static String ESPERA = "_";  
+    public static String INACTIVO = " ";
+    
     public abstract void Resolver();
 
     public abstract List<Proceso> OrdenarListaProcesos(List<Proceso> p);
@@ -80,5 +83,13 @@ public abstract class Algoritmo {
             resultado.append("\n");
         }
         return resultado.toString();
+    }
+
+    public Proceso CompletarColumnas(Proceso p, int rafagas) {
+        while (p.getCantidadColumnas() < rafagas) {
+            p.agregarPunto(" ");
+        }
+
+        return p;
     }
 }

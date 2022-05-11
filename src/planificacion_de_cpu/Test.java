@@ -23,15 +23,48 @@ import java.util.List;
  *
  * @author abelt
  */
-public class Planificacion_de_CPU {
+public class Test {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        
+        
+        
+        /*
+        
+        
+        
+        
+        
+        
+        
+        PARA EJECUTAR EL PROGRAMA DEBE IR A EJECUTAR EL ARCHIVO EN Vista/Inicio.java 
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        */
+        
+        
+        
+        
+        
+        
+        
+        
         // TODO code application logic here
         //System.out.println("hola mundo");
-        Lector.leer();
+        //Lector.leer();
 
         List<Proceso> q = new ArrayList();
         q.add(new Proceso("A", 0, 6, 2));
@@ -50,30 +83,20 @@ public class Planificacion_de_CPU {
         //AlgoritmoFCFS f = new AlgoritmoFCFS(q);
         //f.Resolver();
 
-        /*
-        List<Proceso> qq = q;
-        AlgoritmoFCFS f = new AlgoritmoFCFS(q);
-        f.Resolver();
-        */
         
         //AlgoritmoHRRB h = new AlgoritmoHRRB(q);
         //h.Resolver();
 
 
         //AlgoritmoPrioridad f = new AlgoritmoPrioridad(q);
-        //AlgoritmoRoundRobin f = new AlgoritmoRoundRobin(q, 4);
+        
+        //AlgoritmoRoundRobin f = new AlgoritmoRoundRobin(q, 8);
+        
+        //AlgoritmoHRRB f = new AlgoritmoHRRB(q);
         //f.Resolver();
-        ArrayList<String> l = new ArrayList();
-        l.add(" ");
-        l.add(" ");
-        l.add("_");
-        l.add("X");
-        l.add("X");
-        l.add("X");
-        l.add("X");
-        l.add("X");
-        l.add("X");
-        System.out.println(l.indexOf("X") - l.indexOf("_") + 1);
+
+        AlgoritmoRoundRobin f = new AlgoritmoRoundRobin(q, 4);
+        f.Resolver();
 
     }
 

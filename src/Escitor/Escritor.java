@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -30,6 +31,8 @@ public class Escritor {
             salida.close();
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null, ex);
+            
         } catch (Exception e) {
             System.out.println(e);
         }

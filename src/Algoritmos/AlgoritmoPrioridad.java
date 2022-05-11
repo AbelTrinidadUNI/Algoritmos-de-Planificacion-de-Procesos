@@ -50,18 +50,18 @@ public class AlgoritmoPrioridad extends Algoritmo {
                     try {
 
                         //en la posicion 0 se obtiene el proceso y se le indica que se esta ejecutando
-                        this.procesosEnCola.get(0).agregarPunto(i, "x");
+                        this.procesosEnCola.get(0).agregarPunto(i, Algoritmo.EJECUCION);
                         //en caso de que se quiera agregar x en una posicion invalida
                     } catch (IndexOutOfBoundsException e) {
                         //obtengo cantidad de columnas ya pintadas y empiezo desde ahi
                         for (int x = this.procesosEnCola.get(0).getCantidadColumnas(); x < i; x++) {
                             if (x < this.procesosEnCola.get(0).getTiempo_llegada()) {
-                                this.procesosEnCola.get(0).agregarPunto(" ");
+                                this.procesosEnCola.get(0).agregarPunto(Algoritmo.INACTIVO);
                             } else {
-                                this.procesosEnCola.get(0).agregarPunto("_");
+                                this.procesosEnCola.get(0).agregarPunto(Algoritmo.ESPERA);
                             }
                         }
-                        this.procesosEnCola.get(0).agregarPunto(i, "x");
+                        this.procesosEnCola.get(0).agregarPunto(i, Algoritmo.EJECUCION);
 
                     }
                     this.procesosEnCola.get(0).setRafagasCompletadas(this.procesosEnCola.get(0).getRafagasCompletadas() + 1);
@@ -75,17 +75,17 @@ public class AlgoritmoPrioridad extends Algoritmo {
                 } else {
 
                     try {
-                        this.procesosEnCola.get(j).agregarPunto(i, "_");
+                        this.procesosEnCola.get(j).agregarPunto(i, Algoritmo.ESPERA);
                     } catch (IndexOutOfBoundsException e) {
                         for (int x = this.procesosEnCola.get(j).getCantidadColumnas(); x < i; x++) {
                             if (this.procesosEnCola.get(j).getTiempo_llegada() < x) {
-                                this.procesosEnCola.get(j).agregarPunto("_");
+                                this.procesosEnCola.get(j).agregarPunto(Algoritmo.ESPERA);
 
                             } else {
-                                this.procesosEnCola.get(j).agregarPunto(" ");
+                                this.procesosEnCola.get(j).agregarPunto(Algoritmo.INACTIVO);
                             }
                         }
-                        this.procesosEnCola.get(j).agregarPunto("_");
+                        this.procesosEnCola.get(j).agregarPunto(Algoritmo.ESPERA);
                     }
 
                 }
@@ -97,10 +97,9 @@ public class AlgoritmoPrioridad extends Algoritmo {
 
         //crea la tabla
         String resultado = this.getTabla(this.procesosCompletados, this.totalRafagas) + this.promediar(this.procesosCompletados);
-        Escritor e = new Escritor("src/Archivos/ResultadosAlgoritmoPrioridad.csv");
+        Escritor e = new Escritor("src/Archivos/Resultados-Algortmo-Prioridad.csv");
         e.escibir(resultado);
 
-        System.out.println(resultado);
     }
 
     public List<Proceso> OrdenarListaProcesosNombre(List<Proceso> p) {

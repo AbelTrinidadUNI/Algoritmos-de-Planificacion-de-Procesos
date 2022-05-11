@@ -34,21 +34,20 @@ public class AlgoritmoFCFS extends Algoritmo {
 
     @Override
     public void Resolver() {
-        List<Proceso> lista = new ArrayList();
         for (int i = 0; i < this.totalRafagas; i++) {
 
             if (!this.procesos.get(0).getCompletado() && this.procesos.get(0).getTiempo_llegada() <= i) {
                 try {
-                    this.procesos.get(0).agregarPunto(i, "x");
+                    this.procesos.get(0).agregarPunto(i, Algoritmo.EJECUCION);
                 } catch (IndexOutOfBoundsException e) {
                     for (int j = 0; j < i; j++) {
                         if (j < this.procesos.get(0).getTiempo_llegada()) {
-                            this.procesos.get(0).agregarPunto(j, " ");
+                            this.procesos.get(0).agregarPunto(j, Algoritmo.INACTIVO);
                         } else {
-                            this.procesos.get(0).agregarPunto(j, "_");
+                            this.procesos.get(0).agregarPunto(j, Algoritmo.ESPERA);
                         }
                     }
-                    this.procesos.get(0).agregarPunto(i, "x");
+                    this.procesos.get(0).agregarPunto(i, Algoritmo.EJECUCION);
 
                 }
                 this.procesos.get(0).setRafagasCompletadas(this.procesos.get(0).getRafagasCompletadas() + 1);
@@ -66,45 +65,15 @@ public class AlgoritmoFCFS extends Algoritmo {
                     this.procesos.remove(0);
                     this.procesos.add(CompletarColumnas(p, this.totalRafagas));
                 }
-            } else {
-
-                this.procesos.get(0).agregarPunto(i, "*");
             }
         }
 
-        Escritor e = new Escritor("src/Archivos/Resultados.csv");
-        e.escibir(this.Resultado() + this.promediar(this.procesos));
+        Escritor e = new Escritor("src/Archivos/Resultados-Algoritmo-FCFS.csv");
+        e.escibir(this.getTabla(this.procesos, totalRafagas) + this.promediar(this.procesos));
     }
     
-    private Proceso CompletarColumnas(Proceso p, int rafagas){
-        while(p.getCantidadColumnas() < rafagas){
-            p.agregarPunto("");
-        }
-        
-        return p;
-    }
 
-    public String Resultado() {
-        List<String> l = new ArrayList();
-        //System.out.println("--------------------- Resultado ----------------------------");
-        List<Integer> numeros = new ArrayList();
-        for (int i = 0; i < this.TotalRafagas(this.procesos); i++) {
-            numeros.add(i);
-            //System.out.print(i + ";");
-        }
-
-        l.add(numeros.toString().replaceAll(", ", ";").replace("[", "").replace("]", ""));
-        //System.out.println();
-
-        for (int i = 0; i < this.procesos.size(); i++) {
-            l.add(this.procesos.get(i).toStringPuntosAPintar());
-            //System.out.println(this.procesos.get(i).toStringPuntosAPintar());
-
-        }
-       // System.out.println("------------------------------------------------------------");
-        return l.toString().replaceAll(", ", "\n").replace("[", "").replace("]", "");
-    }
-
+    
     @Override
     public List<Proceso> OrdenarListaProcesos(List<Proceso> p) {
         Collections.sort(p, (Proceso p1, Proceso p2) -> new Integer(p1.getTiempo_llegada()).compareTo(new Integer(p2.getTiempo_llegada())));
@@ -113,7 +82,7 @@ public class AlgoritmoFCFS extends Algoritmo {
 
     @Override
     public int getTiempoEspera(Proceso p) {
-        return this.getCantidadCaracter(p.toStringPuntosAPintar(), '_');
+        return this.getCantidadCaracter(p.toStringPuntosAPintar(), Algoritmo.ESPERA.charAt(0));
     }
 
     @Override
