@@ -19,7 +19,6 @@ public class Proceso {
     private int rafagasCompletadas;
     private boolean completado;
     private List<String> puntosAPintar;
-    
     private int tiempo_espera;
     private int tiempo_ejecucion;
     private int tiempo_respuesta;

@@ -35,53 +35,56 @@ public class AlgoritmoRoundRobin extends Algoritmo {
         List<Proceso> completado = new ArrayList();
 
         for (int i = 0; i < this.totalRafagas; i++) {
+            //en caso de que sea mayor o igual a la cantidad de rafagas
+            if (this.quantum >= this.procesos.get(0).getRafagas()) {
 
-            if (this.quantum > this.procesos.get(0).getRafagas()) {
-                this.procesos.get(0).agregarPunto(i, "x");
-                this.procesos.get(0).setRafagasCompletadas(this.procesos.get(0).getRafagasCompletadas() + 1);
-
-            } else {
-
-                if (!this.procesos.get(0).getCompletado()) {
-                    try {
-                        this.procesos.get(0).agregarPunto(i, "x");
-                    } catch (IndexOutOfBoundsException e) {
-                        for (int j = 0; j < i; j++) {
-                            if (j < this.procesos.get(0).getTiempo_llegada()) {
-                                this.procesos.get(0).agregarPunto(j, " ");
-                            } else {
-                                this.procesos.get(0).agregarPunto(j, "_");
-                            }
-                        }
-                        this.procesos.get(0).agregarPunto(i, "x");
-
-                    }
-
-                    for (int x = 0; x < this.quantum; x++) {
-                        this.procesos.get(0).setRafagasCompletadas(procesos.get(0).getRafagasCompletadas() + 1);
-                    }
-                    if (this.procesos.get(0).getRafagasCompletadas() == this.procesos.get(0).getRafagas()) {
-
-                        //Se calculan los tiempos de espera, ejecucion y respuesta del proceso al terminar de ejecutarlo
-                        this.procesos.get(0).setTiempo_espera(this.getTiempoEspera(this.procesos.get(0)));
-                        // this.procesos.get(0).setTiempo_ejecucion(this.getTiempoEjecucion(this.procesos.get(0)));
-                        this.procesos.get(0).setTiempo_respuesta(this.getTiempoRespuesta(this.procesos.get(0)));
-
-                        //se marca como completado y se quita de la primera posicion y se lo manda al final de la lista
-                        this.procesos.get(0).setCompletado(true);
-                        Proceso p = this.procesos.get(0);
-                        this.procesos.remove(0);
-                        this.procesos.add(p);
-                    }
-
-                    this.procesos.get(0).agregarPunto(i, "*");
+                for (int y = 0; y < this.quantum; y++) {
+                    i++;
+                    this.procesos.get(0).agregarPunto("ax");
+                    this.procesos.get(0).setRafagasCompletadas(this.procesos.get(0).getRafagasCompletadas() + 1);
                 }
+                if (this.procesos.get(0).getRafagasCompletadas() == this.procesos.get(0).getRafagas()) {
+                    completado.add(this.procesos.remove(0));
+                } else {
+                    this.procesos.add(this.procesos.remove(0));
+                }
+            } //en caso de que el proceso es menor que el quantum
+            else {
+
+                for (int x = 0; x < this.quantum; x++) {
+                    i++;
+                    this.procesos.get(0).setRafagasCompletadas(procesos.get(0).getRafagasCompletadas() + 1);
+                    this.procesos.get(0).agregarPunto("x");
+                }
+                completado.add(this.procesos.remove(0));
+
+            }
+            if (this.procesos.get(0).getRafagasCompletadas() == this.procesos.get(0).getRafagas()) {
+                this.procesos.get(0).setCompletado(true);
+                //Se calculan los tiempos de espera, ejecucion y respuesta del proceso al terminar de ejecutarlo
+                this.procesos.get(0).setTiempo_espera(this.getTiempoEspera(this.procesos.get(0)));
+                this.procesos.get(0).setTiempo_ejecucion(this.getTiempoEjecucion(this.procesos.get(0)));
+                this.procesos.get(0).setTiempo_respuesta(this.getTiempoRespuesta(this.procesos.get(0)));
+
+                //se marca como completado y se quita de la primera posicion y se lo manda al final de la lista
+                this.procesos.get(0).setCompletado(true);
+                Proceso p = this.procesos.get(0);
+
+                this.procesos.remove(0);
+                this.procesos.add(CompletarColumnas(p, this.quantum));
+                //Se calculan los tiempos de espera, ejecucion y respuesta del proceso al terminar de ejecutarlo
+                //   this.procesos.get(0).setTiempo_espera(this.getTiempoEspera(this.procesos.get(0)));
+                // this.procesos.get(0).setTiempo_ejecucion(this.getTiempoEjecucion(this.procesos.get(0)));
+                //this.procesos.get(0).setTiempo_respuesta(this.getTiempoRespuesta(this.procesos.get(0)));
             }
 
+            //      this.procesos.get(0).agregarPunto("*");
         }
 
-        Escritor e = new Escritor("src/Archivos/Resultados.csv");
-        e.escibir(this.Resultado() + this.promediar(this.procesos));
+        for (int i = 0; i < completado.size(); i++) {
+            
+            System.out.println(completado.get(i).toStringPuntosAPintar());
+        }
     }
 
     public String Resultado() {
@@ -136,16 +139,6 @@ public class AlgoritmoRoundRobin extends Algoritmo {
         return this.getTiempoEspera(p) + 1;
     }
 
-    private int getCantidadCaracter(String cadena, char caracter) {
-        int cantidad = 0;
-        for (int i = 0; i < cadena.length(); i++) {
-            if (cadena.charAt(i) == caracter) {
-                cantidad++;
-            }
-        }
-        return cantidad;
-    }
-
     @Override
     public int getTiempoEspera(Proceso p) {
         return this.getCantidadCaracter(p.toStringPuntosAPintar(), '_');
@@ -157,6 +150,24 @@ public class AlgoritmoRoundRobin extends Algoritmo {
 
     private int getQuantum() {
         return this.quantum;
+    }
+
+    private int getCantidadCaracter(String cadena, char caracter) {
+        int cantidad = 0;
+        for (int i = 0; i < cadena.length(); i++) {
+            if (cadena.charAt(i) == caracter) {
+                cantidad++;
+            }
+        }
+        return cantidad;
+    }
+
+    private Proceso CompletarColumnas(Proceso p, int rafagas) {
+        while (p.getCantidadColumnas() < rafagas) {
+            p.agregarPunto("");
+        }
+
+        return p;
     }
 
 }

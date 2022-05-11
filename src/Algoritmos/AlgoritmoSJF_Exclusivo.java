@@ -33,16 +33,16 @@ public class AlgoritmoSJF_Exclusivo extends Algoritmo {
             /*en cada vuelta se verificara si i es igual a alguno de los tiempos de llegada de los procesos
             si es asi se procedera a ordenar la lista con procesos hasta ese momento
              */
- 
+
             //se cargan los procesos
             for (int j = 0; j < this.procesos.size() && this.procesosEnCola.size() <= this.procesos.size(); j++) {
-                if (this.procesos.get(j).getTiempo_llegada() == i) {
-                    this.procesosEnCola.add(this.procesos.get(j));                  
+                if (this.procesos.get(j).getPrioridad() == i) {
+                    this.procesosEnCola.add(this.procesos.get(j));
                 }
             }
-            
+
             this.procesosEnCola = this.OrdenarListaProcesosRafagas(this.procesosEnCola);
-  
+
             int aux = this.procesosEnCola.size();
             for (int j = 0; j < aux; j++) {
                 if (j == 0) {
@@ -60,7 +60,7 @@ public class AlgoritmoSJF_Exclusivo extends Algoritmo {
 
                     }
                     this.procesosEnCola.get(0).setRafagasCompletadas(this.procesosEnCola.get(0).getRafagasCompletadas() + 1);
-                    
+
                     if (this.procesosEnCola.get(0).getRafagasCompletadas() == this.procesosEnCola.get(0).getRafagas()) {
                         this.procesosCompletados.add(this.procesosEnCola.remove(0));
                         aux--;
@@ -83,13 +83,13 @@ public class AlgoritmoSJF_Exclusivo extends Algoritmo {
                 }
             }
         }
-        
+
         this.procesosCompletados = this.OrdenarListaProcesosNombre(this.procesosCompletados);
-        
+
         String resultado = this.getTabla(this.procesosCompletados, this.totalRafagas) + this.promediar(this.procesosCompletados);
-        Escritor e = new Escritor("src/Archivos/Resultados.csv");
-        e.escibir(resultado);
-        
+       // Escritor e = new Escritor("src/Archivos/Resultados.csv");
+       // e.escibir(resultado);
+
         System.out.println(resultado);
     }
 
