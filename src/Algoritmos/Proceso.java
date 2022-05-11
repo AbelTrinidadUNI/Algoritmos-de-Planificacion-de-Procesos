@@ -120,7 +120,7 @@ public class Proceso {
         return this.puntosAPintar;
     }
     public void agregarPunto(int posicion, String valor){
-        this.puntosAPintar.add(posicion, valor);
+        this.puntosAPintar.add(posicion, valor.toUpperCase());
     }
     public void agregarPunto(String valor){
         this.puntosAPintar.add(valor);

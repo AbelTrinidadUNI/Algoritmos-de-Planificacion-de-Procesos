@@ -56,14 +56,24 @@ public class Planificacion_de_CPU {
         f.Resolver();
         */
         
-        AlgoritmoHRRB h = new AlgoritmoHRRB(q);
-        h.Resolver();
+        //AlgoritmoHRRB h = new AlgoritmoHRRB(q);
+        //h.Resolver();
 
 
         //AlgoritmoPrioridad f = new AlgoritmoPrioridad(q);
-        AlgoritmoRoundRobin f = new AlgoritmoRoundRobin(q, 4);
-        f.Resolver();
-
+        //AlgoritmoRoundRobin f = new AlgoritmoRoundRobin(q, 4);
+        //f.Resolver();
+        ArrayList<String> l = new ArrayList();
+        l.add(" ");
+        l.add(" ");
+        l.add("_");
+        l.add("X");
+        l.add("X");
+        l.add("X");
+        l.add("X");
+        l.add("X");
+        l.add("X");
+        System.out.println(l.indexOf("X") - l.indexOf("_") + 1);
 
     }
 
