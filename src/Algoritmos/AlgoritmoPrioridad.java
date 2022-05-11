@@ -16,7 +16,6 @@ import java.util.List;
 public class AlgoritmoPrioridad extends Algoritmo {
 
     List<Proceso> procesos;
-    private int prioridad;
     List<Proceso> procesosEnCola;
     List<Proceso> procesosCompletados;
     private int totalRafagas;
@@ -26,7 +25,6 @@ public class AlgoritmoPrioridad extends Algoritmo {
         this.totalRafagas = this.TotalRafagas(p);
         this.procesosCompletados = new ArrayList();
         this.procesosEnCola = new ArrayList();
-        this.prioridad = this.getPrioridad();
     }
 
     @Override
@@ -36,21 +34,26 @@ public class AlgoritmoPrioridad extends Algoritmo {
 
             //se cargan los procesos
             for (int j = 0; j < this.procesos.size() && this.procesosEnCola.size() <= this.procesos.size(); j++) {
-                if (this.procesos.get(0).getPrioridad() > this.procesos.get(0 + 1).getPrioridad()) {
-                    if (this.procesos.get(j).getTiempo_llegada() == i) {
-                        this.procesosEnCola.add(this.procesos.get(j));
-                    }
+                if (this.procesos.get(j).getTiempo_llegada() == i) {
+                    this.procesosEnCola.add(this.procesos.get(j));
+
                 }
 
             }
-            this.procesosEnCola = this.OrdenarListaProcesosRafagas(this.procesosEnCola);
+            //ordeno la lista por prioridad
+            this.procesosEnCola = this.OrdenarListaProcesosPrioridad(this.procesosEnCola);
 
+            //esto para saber la cantidad de procesos en cola
             int aux = this.procesosEnCola.size();
             for (int j = 0; j < aux; j++) {
                 if (j == 0) {
                     try {
+
+                        //en la posicion 0 se obtiene el proceso y se le indica que se esta ejecutando
                         this.procesosEnCola.get(0).agregarPunto(i, "x");
+                        //en caso de que se quiera agregar x en una posicion invalida
                     } catch (IndexOutOfBoundsException e) {
+                        //obtengo cantidad de columnas ya pintadas y empiezo desde ahi
                         for (int x = this.procesosEnCola.get(0).getCantidadColumnas(); x < i; x++) {
                             if (x < this.procesosEnCola.get(0).getTiempo_llegada()) {
                                 this.procesosEnCola.get(0).agregarPunto(" ");
@@ -63,11 +66,14 @@ public class AlgoritmoPrioridad extends Algoritmo {
                     }
                     this.procesosEnCola.get(0).setRafagasCompletadas(this.procesosEnCola.get(0).getRafagasCompletadas() + 1);
 
+                    //se comprueba si ya se completa la cantidad de rafagas del proceso
                     if (this.procesosEnCola.get(0).getRafagasCompletadas() == this.procesosEnCola.get(0).getRafagas()) {
                         this.procesosCompletados.add(this.procesosEnCola.remove(0));
-                        aux--;
+                        aux--;//disminuyo la cantidad de la lista de los procesos en cola
                     }
+                    //en caso de que los procesos no esten en ejecucion
                 } else {
+
                     try {
                         this.procesosEnCola.get(j).agregarPunto(i, "_");
                     } catch (IndexOutOfBoundsException e) {
@@ -86,11 +92,13 @@ public class AlgoritmoPrioridad extends Algoritmo {
             }
         }
 
+        //ordena por nombres los procesos
         this.procesosCompletados = this.OrdenarListaProcesosNombre(this.procesosCompletados);
 
+        //crea la tabla
         String resultado = this.getTabla(this.procesosCompletados, this.totalRafagas) + this.promediar(this.procesosCompletados);
-        //   Escritor e = new Escritor("src/Archivos/Resultados.csv");
-        // e.escibir(resultado);
+        Escritor e = new Escritor("src/Archivos/ResultadosAlgoritmoPrioridad.csv");
+        e.escibir(resultado);
 
         System.out.println(resultado);
     }
@@ -100,8 +108,8 @@ public class AlgoritmoPrioridad extends Algoritmo {
         return p;
     }
 
-    public List<Proceso> OrdenarListaProcesosRafagas(List<Proceso> p) {
-        Collections.sort(p, (Proceso p1, Proceso p2) -> new Integer(p1.getRafagas()).compareTo(new Integer(p2.getRafagas())));
+    public List<Proceso> OrdenarListaProcesosPrioridad(List<Proceso> p) {
+        Collections.sort(p, (Proceso p1, Proceso p2) -> new Integer(p1.getPrioridad()).compareTo(new Integer(p2.getPrioridad())));
         return p;
     }
 
@@ -118,10 +126,6 @@ public class AlgoritmoPrioridad extends Algoritmo {
             sum += p.getRafagas();
         }
         return sum;
-    }
-
-    public int getPrioridad() {
-        return prioridad;
     }
 
     @Override

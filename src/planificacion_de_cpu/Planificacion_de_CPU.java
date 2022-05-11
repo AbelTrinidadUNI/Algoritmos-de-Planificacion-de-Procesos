@@ -50,8 +50,8 @@ public class Planificacion_de_CPU {
         //AlgoritmoFCFS f = new AlgoritmoFCFS(q);
         //f.Resolver();
 
-        AlgoritmoPrioridad f = new AlgoritmoPrioridad(q);
-        // AlgoritmoRoundRobin f = new AlgoritmoRoundRobin(q, 4);
+        //AlgoritmoPrioridad f = new AlgoritmoPrioridad(q);
+        AlgoritmoRoundRobin f = new AlgoritmoRoundRobin(q, 4);
         f.Resolver();
 
     }

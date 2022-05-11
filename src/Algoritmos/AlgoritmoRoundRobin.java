@@ -32,78 +32,77 @@ public class AlgoritmoRoundRobin extends Algoritmo {
      */
     @Override
     public void Resolver() {
-        List<Proceso> completado = new ArrayList();
+        List<Proceso> procesosCompletado = new ArrayList();
 
         for (int i = 0; i < this.totalRafagas; i++) {
-            //en caso de que sea mayor o igual a la cantidad de rafagas
-            if (this.quantum >= this.procesos.get(0).getRafagas()) {
 
-                for (int y = 0; y < this.quantum; y++) {
+            for (Proceso p : this.procesos) {
+                System.out.println(p.getNombre());
+            }
+            System.out.println("\n");
+            int operacion = this.procesos.get(0).getRafagas() - this.procesos.get(0).getRafagasCompletadas();
+            //en caso de que sea mayor o igual a la cantidad de rafagas
+            if (this.procesos.size() > 0 && this.quantum >= operacion) {
+                for (int c = this.procesos.get(0).getCantidadColumnas(); c < i; c++) {
+                    if (c < this.procesos.get(0).getTiempo_llegada()) {
+                        this.procesos.get(0).agregarPunto(" ");
+                    } else {
+                        this.procesos.get(0).agregarPunto("_");
+                    }
+                }
+                for (int y = 0; y < this.procesos.get(0).getRafagas(); y++) {
                     i++;
-                    this.procesos.get(0).agregarPunto("ax");
+                    this.procesos.get(0).agregarPunto("x");
                     this.procesos.get(0).setRafagasCompletadas(this.procesos.get(0).getRafagasCompletadas() + 1);
                 }
+                i--;//pq se aumenta 1 de mas en el for entonces revertimos eso
                 if (this.procesos.get(0).getRafagasCompletadas() == this.procesos.get(0).getRafagas()) {
-                    completado.add(this.procesos.remove(0));
-                } else {
-                    this.procesos.add(this.procesos.remove(0));
+                    procesosCompletado.add(this.procesos.remove(0));
                 }
+
             } //en caso de que el proceso es menor que el quantum
-            else {
+            else if (this.procesos.size() > 0) {
+                for (int c = this.procesos.get(0).getCantidadColumnas(); c < i; c++) {
+                    if (c < this.procesos.get(0).getTiempo_llegada()) {
+                        this.procesos.get(0).agregarPunto(" ");
+                    } else {
+                        this.procesos.get(0).agregarPunto("_");
+                    }
+
+                }
 
                 for (int x = 0; x < this.quantum; x++) {
-                    i++;
-                    this.procesos.get(0).setRafagasCompletadas(procesos.get(0).getRafagasCompletadas() + 1);
+                    i++;//se suma pq se va agregando cosas por la posicion de mi i
                     this.procesos.get(0).agregarPunto("x");
+                    this.procesos.get(0).setRafagasCompletadas(procesos.get(0).getRafagasCompletadas() + 1);
+
                 }
-                completado.add(this.procesos.remove(0));
+                i--;//pq se aumenta 1 de mas en el for entonces revertimos eso
+                if (this.procesos.get(0).getRafagasCompletadas() == this.procesos.get(0).getRafagas()) {
+                    procesosCompletado.add(this.procesos.remove(0));
+                } else {
 
+                    this.procesos.add(this.procesos.remove(0));
+                }
             }
-            if (this.procesos.get(0).getRafagasCompletadas() == this.procesos.get(0).getRafagas()) {
-                this.procesos.get(0).setCompletado(true);
-                //Se calculan los tiempos de espera, ejecucion y respuesta del proceso al terminar de ejecutarlo
-                this.procesos.get(0).setTiempo_espera(this.getTiempoEspera(this.procesos.get(0)));
-                this.procesos.get(0).setTiempo_ejecucion(this.getTiempoEjecucion(this.procesos.get(0)));
-                this.procesos.get(0).setTiempo_respuesta(this.getTiempoRespuesta(this.procesos.get(0)));
+            //System.out.println(procesosCompletado.size());
+            /*  if (this.procesos.size() > 0) {
+                if (this.procesos.get(0).getRafagasCompletadas() == this.procesos.get(0).getRafagas()) {
 
-                //se marca como completado y se quita de la primera posicion y se lo manda al final de la lista
-                this.procesos.get(0).setCompletado(true);
-                Proceso p = this.procesos.get(0);
-
-                this.procesos.remove(0);
-                this.procesos.add(CompletarColumnas(p, this.quantum));
-                //Se calculan los tiempos de espera, ejecucion y respuesta del proceso al terminar de ejecutarlo
-                //   this.procesos.get(0).setTiempo_espera(this.getTiempoEspera(this.procesos.get(0)));
-                // this.procesos.get(0).setTiempo_ejecucion(this.getTiempoEjecucion(this.procesos.get(0)));
-                //this.procesos.get(0).setTiempo_respuesta(this.getTiempoRespuesta(this.procesos.get(0)));
-            }
-
+                    this.procesos.get(0).setCompletado(true);
+                    //Se calculan los tiempos de espera, ejecucion y respuesta del proceso al terminar de ejecutarlo
+                    this.procesos.get(0).setTiempo_espera(this.getTiempoEspera(this.procesos.get(0)));
+                    this.procesos.get(0).setTiempo_ejecucion(this.getTiempoEjecucion(this.procesos.get(0)));
+                    this.procesos.get(0).setTiempo_respuesta(this.getTiempoRespuesta(this.procesos.get(0)));
+                }
+            }*/
             //      this.procesos.get(0).agregarPunto("*");
         }
 
-        for (int i = 0; i < completado.size(); i++) {
-            
-            System.out.println(completado.get(i).toStringPuntosAPintar());
+        for (int i = 0; i < procesosCompletado.size(); i++) {
+
+            System.out.println(procesosCompletado.get(i).toStringPuntosAPintar());
         }
-    }
-
-    public String Resultado() {
-        List<String> l = new ArrayList();
-
-        List<Integer> numeros = new ArrayList();
-        for (int i = 0; i < this.TotalRafagas(this.procesos); i++) {
-            numeros.add(i);
-        }
-        l.add(numeros.toString().replaceAll(", ", ";").replace("[", "").replace("]", ""));
-        //System.out.println();
-
-        for (int i = 0; i < this.procesos.size(); i++) {
-            l.add(this.procesos.get(i).toStringPuntosAPintar());
-            //System.out.println(this.procesos.get(i).toStringPuntosAPintar());
-
-        }
-        // System.out.println("------------------------------------------------------------");
-        return l.toString().replaceAll(", ", "\n").replace("[", "").replace("]", "");
     }
 
     @Override
